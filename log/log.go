@@ -1,8 +1,8 @@
 package log
 
 import (
-	"encoding/json"
 	"api/config"
+	"encoding/json"
 
 	"fmt"
 

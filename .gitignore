@@ -1,5 +1,6 @@
 /*.exe
 /logs
-/*.db
-/cmd/debug
-/cmd/*.exe
+/build/*.db
+/build/debug
+/build/*.exe
+/build/logs

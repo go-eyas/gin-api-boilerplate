@@ -10,7 +10,7 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceRoot}/main.go",
-      "cwd": "${workspaceRoot}",
+      "cwd": "${workspaceRoot}/build",
       "env": {},
       "args": []
     }

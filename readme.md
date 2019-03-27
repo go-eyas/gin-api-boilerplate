@@ -42,6 +42,29 @@
 * ErrorMiddleware 错误处理，产生错误后，把错误信息回应到http请求，支持设置错误信息，错误码，数据
 * cors 跨域，基于 github.com/gin-contrib/cors ，已配置好，只需要改配置文件就好
 
+## 使用
+
+1. git clone --depth=1 https://github.com/go-eyas/gin-api-boilerplate
+2. 运行脚本 `./build.sh dev`, 将会直接下载依赖并运行
+    + 如果您的IDE是vscode，请按F5直接运行
+    + 如果需要命令行运行，请先将目录切换到 `build/`，然后 `go run ../main.go`，不然配置文件用不了
+
+#### `./build.sh` 脚本使用
+
+```sh
+$ ./build.sh
+
+USAGE:
+  ./run.sh <command>
+
+COMMANDS:
+  docker [version]            构建项目成 docker 镜像
+  build                       构建适用于当前操作系统的可执行文件
+  dev                         启动开发环境，自动重启，自动生成文档
+  help                        打印帮助信息
+```
+
+
 ## 命令行工具使用
 
 ```sh
