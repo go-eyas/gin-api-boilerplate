@@ -41,3 +41,49 @@
 * gin.Recovery 错误处理，即使应用异常后不会导致程序退出
 * ErrorMiddleware 错误处理，产生错误后，把错误信息回应到http请求，支持设置错误信息，错误码，数据
 * cors 跨域，基于 github.com/gin-contrib/cors ，已配置好，只需要改配置文件就好
+
+## 命令行工具使用
+
+```sh
+# version
+$ go run main.go version
+API v1.0.0
+
+# help, 
+$ go run main.go help
+API is a Golang Gin out of box api example:
+* logs: base on zap
+* command line interface tool
+* database: base on gorm
+* database migration
+* config: base on configor
+
+Usage:
+  API [flags]
+  API [command]
+
+Available Commands:
+  api         Start HTTP API Server
+  help        Help about any command
+  migrate     migrate database
+  version     Print the version number of API
+
+Flags:
+  -h, --help   help for API
+
+Use "API [command] --help" for more information about a command.
+
+# api, start http server
+$ go run main.go api
+[GIN-debug] [WARNING] Now Gin requires Go 1.6 or later and Go 1.7 will be required soon.
+
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:   export GIN_MODE=release
+ - using code:  gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /                         --> api/handler.SayHello (6 handlers)
+2019-03-27T18:10:32.955+0800    info    route/api.go:48 API Server Listening:
+[GIN-debug] Listening and serving HTTP on
+```
