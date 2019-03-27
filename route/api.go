@@ -2,6 +2,7 @@ package route
 
 import (
 	"api/config"
+	"api/graphql"
 	"api/handler"
 	"api/log"
 	"time"
@@ -51,4 +52,8 @@ func APIRun(conf *config.Config) error {
 
 func routes(router *gin.Engine) {
 	router.GET("/", handler.SayHello)
+
+	router.GET("/api/v1/graphql", graphql.PlayGround("Graphql API", "/api/v1/graphql"))
+	router.POST("/api/v1/graphql", graphql.Resolver())
+
 }

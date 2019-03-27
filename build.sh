@@ -48,6 +48,7 @@ COMMANDS:
   docker [version]            构建项目成 docker 镜像
   build                       构建适用于当前操作系统的可执行文件
   dev                         启动开发环境，自动重启，自动生成文档
+  schema                      编译 graphql schema，每次更改了 schema 都需要执行该命令才能使 schema 生效
   help                        打印帮助信息
 "
 }
@@ -76,6 +77,11 @@ case "$1" in
     cd build
     go run ../main.go
     ;;
+  "schema")
+    check_cmd_or_exit gqlgen
+    cd graphql
+    gqlgen
+  ;;
   "build")
     go build -v -o build/$APPNAME -ldflags "-s" main.go
     green_text "build/$APPNAME: build successfully!"
