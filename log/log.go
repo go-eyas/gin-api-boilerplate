@@ -4,6 +4,7 @@ import (
 	"api/config"
 	"encoding/json"
 	"os"
+	"time"
 
 	"fmt"
 
@@ -42,7 +43,9 @@ func Init(conf *config.Config) {
 		cfg = zap.NewDevelopmentConfig()
 	}
 
-	cfg.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	cfg.EncoderConfig.EncodeTime = func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+		enc.AppendString(t.Format("2006-01-02 15:04:05.000"))
+	}
 
 	if err := json.Unmarshal(rawJSON, &cfg); err != nil {
 		panic(err)
