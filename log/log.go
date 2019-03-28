@@ -3,11 +3,13 @@ package log
 import (
 	"api/config"
 	"encoding/json"
+	"os"
 
 	"fmt"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 var L *zap.Logger
@@ -18,7 +20,7 @@ func Init(conf *config.Config) {
 	rawJSON := []byte(fmt.Sprintf(`{
 	  "level": "%s",
 	  "encoding": "%s",
-	  "outputPaths": ["stdout", "./%s"],
+	  "outputPaths": ["stdout"],
 	  "errorOutputPaths": ["stderr"],
 	  "encoderConfig": {
 	    "messageKey": "message",
@@ -28,7 +30,7 @@ func Init(conf *config.Config) {
 	}`,
 		logConf.Level,
 		logConf.Format,
-		logConf.Path,
+		// logConf.Path,
 	))
 	var cfg zap.Config
 
@@ -45,10 +47,36 @@ func Init(conf *config.Config) {
 	if err := json.Unmarshal(rawJSON, &cfg); err != nil {
 		panic(err)
 	}
-	logger, err := cfg.Build()
-	if err != nil {
-		panic(err)
+
+	fileWriter := zapcore.AddSync(&lumberjack.Logger{
+		Filename:   logConf.Path,
+		MaxSize:    5, // megabytes
+		MaxBackups: 10,
+		MaxAge:     28, // days
+		LocalTime:  true,
+	})
+
+	consoleWriter := zapcore.Lock(os.Stdout)
+
+	var enc zapcore.Encoder
+	if logConf.Format == "json" {
+		enc = zapcore.NewJSONEncoder(cfg.EncoderConfig)
+	} else {
+		enc = zapcore.NewConsoleEncoder(cfg.EncoderConfig)
 	}
+
+	// core := zapcore.NewCore(enc, fileWriter, cfg.Level)
+	core := zapcore.NewTee(
+		zapcore.NewCore(enc, fileWriter, cfg.Level),
+		zapcore.NewCore(zapcore.NewConsoleEncoder(cfg.EncoderConfig), consoleWriter, cfg.Level),
+	)
+
+	logger := zap.New(core)
+
+	// logger, err := cfg.Build()
+	// if err != nil {
+	// 	panic(err)
+	// }
 	defer logger.Sync()
 
 	L = logger
