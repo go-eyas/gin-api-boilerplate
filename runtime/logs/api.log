@@ -1,0 +1,47 @@
+2019-07-09 15:35:11.958	info	API Server Listening: :16000
+2019-07-09 15:36:20.350	info	API Server Listening: :16000
+2019-07-09 15:37:16.673	info	API Server Listening: :16000
+2019-07-09 15:38:11.301	info	API Server Listening: :9000
+2019-07-09 15:51:00.355	info	API Server Listening: :9000
+2019-07-09 15:53:07.758	info	API Server Listening: :9000
+2019-07-09 15:53:20.816	info	API Server Listening: :9000
+2019-07-09 15:57:30.374	info	API Server Listening: :9000
+2019-07-09 16:05:02.450	fatal	initial database error: sql: unknown driver "sqlite3" (forgotten import?)
+2019-07-09 16:05:38.999	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:aimeidev:xe1Pi>kimfodRbb7@(119.146.204.122:3306)/minik_dev?charset=utf8&parseTime=true&loc=Asia%2FShanghai&multiStatements=true} Log:{Level:debug Path:runtime/logs Console:true}}
+2019-07-09 16:05:39.056	info	API Server Listening: :9000
+2019-07-09 16:07:37.895	info	数据库地址为空，跳过初始化
+2019-07-09 16:07:37.929	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true}}
+2019-07-09 16:07:37.938	info	API Server Listening: :9000
+2019-07-09 16:08:54.818	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true}}
+2019-07-09 16:08:54.869	info	API Server Listening: :9000
+2019-07-09 16:37:48.671	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true}}
+2019-07-09 16:37:48.676	info	API Server Listening: :9000
+2019-07-09 16:48:01.802	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[127.0.0.1:6379] Password: DB:1 Namespace:api}}
+2019-07-09 16:48:01.830	info	API Server Listening: :9000
+2019-07-09 16:48:34.550	error	redis 连接失败, err=dial tcp 127.0.0.1:6379: connect: connection refused
+2019-07-09 16:49:03.501	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[10.0.3.252:6379] Password: DB:1 Namespace:api}}
+2019-07-09 16:49:03.506	info	API Server Listening: :9000
+2019-07-09 16:50:30.551	info	redis config is empty, skip init redis
+2019-07-09 16:50:30.553	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[] Password: DB:1 Namespace:api}}
+2019-07-09 16:50:30.678	info	API Server Listening: :9000
+2019-07-09 16:52:18.033	info	redis config is empty, skip init redis
+2019-07-09 16:52:18.034	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[] Password: DB:1 Namespace:api}}
+2019-07-09 16:52:18.059	info	API Server Listening: :9000
+2019-07-09 16:52:47.532	info	redis config is empty, skip init redis
+2019-07-09 16:52:47.534	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[] Password: DB:1 Namespace:api}}
+2019-07-09 16:52:47.559	info	API Server Listening: :9000
+2019-07-09 17:03:47.943	info	redis config is empty, skip init redis
+2019-07-09 17:03:47.945	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[] Password: DB:1 Namespace:api}}
+2019-07-09 17:03:47.991	info	API Server Listening: :9000
+2019-07-09 17:11:16.418	info	redis config is empty, skip init redis
+2019-07-09 17:11:16.469	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[] Password: DB:1 Namespace:api}}
+2019-07-09 17:11:16.474	info	API Server Listening: :9000
+2019-07-09 17:11:59.343	info	redis config is empty, skip init redis
+2019-07-09 17:11:59.384	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[] Password: DB:1 Namespace:api}}
+2019-07-09 17:11:59.390	info	API Server Listening: :9000
+2019-07-09 17:12:50.824	info	redis config is empty, skip init redis
+2019-07-09 17:12:50.861	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[] Password: DB:1 Namespace:api}}
+2019-07-09 17:12:50.901	info	API Server Listening: :9000
+2019-07-09 17:15:59.262	info	redis config is empty, skip init redis
+2019-07-09 17:15:59.301	debug	配置: &{Debug:true Runtime:runtime Server:{Addr::9000 BaseURL:http://api.example.com} Cors:{Origin:[*] Methods:[GET POST PUT DELETE PATCH OPTIONS] Headers:[Content-Length Content-Type Origin] Credentials:true MaxAge:24} DB:{Driver:mysql URI:} Log:{Level:debug Path:runtime/logs Console:true} Redis:{Cluster:false Addrs:[] Password: DB:1 Namespace:api}}
+2019-07-09 17:15:59.312	info	API Server Listening: :9000

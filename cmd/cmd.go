@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"api/config"
-	"api/db"
 	"api/log"
+	"api/srv"
 	"fmt"
 	"os"
 
@@ -12,6 +12,7 @@ import (
 
 var AppName = "API"
 var AppVersion = "1.0.0"
+var Tag = ""
 var conf *config.Config
 
 var rootCmd = &cobra.Command{
@@ -35,23 +36,26 @@ var versionCmd = &cobra.Command{
 	Short: "Print the version number of " + AppName,
 	Long:  `All software has versions. This is ` + AppName + `'s`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(AppName + " v" + AppVersion)
+		fmt.Println(AppName + " v" + AppVersion + Tag)
 	},
 }
 
 func init() {
-	// init config
-	conf = config.Load("config.toml")
-	// init log
+	// 初始化配置项
+	conf = config.Conf
+
+	// 创建运行目录
+	os.MkdirAll(conf.Runtime, os.ModePerm)
+
+	// 初始化日志
 	log.Init(conf)
 
-	// init database
-	d := db.Init(conf)
-	defer d.Close() // TODO: will exit now
+	// 初始化客户端
+	srv.Init(conf)
 
+	// 添加命令行工具
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(apiCmd)
-	rootCmd.AddCommand(migrateCmd)
 }
 
 // Execute 启动命令
@@ -60,4 +64,7 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
+	// 关闭客户端
+	defer srv.Close()
 }

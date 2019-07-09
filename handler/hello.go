@@ -7,8 +7,5 @@ import (
 )
 
 func SayHello(ctx *gin.Context) {
-	util.Resp(ctx).OK(gin.H{
-		"hello": "world",
-	})
-
+	util.R(ctx).OK("")
 }

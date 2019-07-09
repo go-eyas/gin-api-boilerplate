@@ -3,7 +3,7 @@ package cmd
 import (
 	"api/config"
 	"api/log"
-	"api/route"
+	"api/api"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -33,8 +33,9 @@ var apiCmd = &cobra.Command{
 
 // API start http server
 func apiCMD(conf *config.Config) {
-	if err := route.APIRun(conf); err != nil {
-		log.Logger.Fatalf("run api error: %v", err)
+	log.Debugf("配置: %+v", conf)
+	if err := api.APIRun(conf); err != nil {
+		log.Fatalf("run api error: %v", err)
 		panic(err)
 	}
 }

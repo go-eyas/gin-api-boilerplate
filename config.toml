@@ -1,0 +1,32 @@
+debug = true # 是否启用调试
+runtime = "runtime" # 运行文件目录
+
+[server]
+addr = ":9000" # 监听地址
+baseUrl = "http://api.example.com" # 最终部署后访问该服务的地址
+
+[cors]
+origin = ["*"]
+methods = ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+headers = ["Content-Length", "Content-Type", "Origin"]
+credentials = true
+maxAge = 24 # 单位: 小时
+
+# 数据库配置
+[db]
+driver = "mysql" # 数据库驱动，可选项 sqlite3 | mysql
+uri = "" # 数据库地址
+
+# 日志配置
+[log]
+level = "debug" # 日志级别
+path = "logs" # 保存日志路径
+console = true # 控制台是否输出日志
+
+# redis 配置
+[redis]
+cluster = false # 是否集群
+addrs = [] # 如果是集群，将集群地址都写到数组内，如果不是集群，只写一个元素
+password = ""
+db = 1
+namespace = "api" # 前缀
