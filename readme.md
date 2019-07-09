@@ -59,7 +59,7 @@ config.yml
 config.local.yml
 ```
 
-其中local 和使用 `export CONFIG_ENV=dev` 环境变量改变
+其中local 可使用 `export CONFIG_ENV=dev` 环境变量改变
 
 
 ## 使用
