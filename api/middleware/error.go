@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	// "net/http"
 	"api/util"
 
 	"github.com/gin-gonic/gin"
@@ -23,7 +22,7 @@ func ErrorMiddleware(logger errLogger) gin.HandlerFunc {
 			if err := recover(); err != nil {
 				logger.Errorf("%v", err)
 				ctx.Abort()
-				util.R(ctx).Res(err)
+				util.R(ctx).Error(err)
 			}
 		}()
 		ctx.Next()

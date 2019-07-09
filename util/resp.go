@@ -32,9 +32,9 @@ func (r resp) Response(data *RData) {
 // parse 解析响应数据
 func (r resp) Parse(v interface{}) *RData {
 	data := &RData{
-		Code:   200,
+		Code:   http.StatusOK,
 		Msg:    "ok",
-		Status: 0,
+		Status: CodeSuccess,
 	}
 	switch v.(type) {
 	case error:
@@ -64,7 +64,7 @@ func (r resp) Parse(v interface{}) *RData {
 
 		resStatus := e["status"]
 		if resStatus == nil {
-			resStatus = 0
+			resStatus = CodeSuccess
 		}
 
 		resMsg := e["msg"]
@@ -99,10 +99,12 @@ func (r resp) Parse(v interface{}) *RData {
 
 // OK 响应成功
 func (r resp) OK(v interface{}) {
-	data := r.Parse(v)
-	data.Code = http.StatusOK
-	data.Msg = "ok"
-	r.Response(data)
+	r.Response(&RData{
+		Code:   http.StatusOK,
+		Msg:    "ok",
+		Status: CodeSuccess,
+		Data: 	v,
+	})
 }
 
 // Res 通用回应
@@ -113,6 +115,25 @@ func (r resp) Res(v interface{}) {
 // Err 回应错误
 func (r resp) Err(v error) {
 	r.Res(v)
+}
+
+func (r resp) Error(v interface{}) {
+	data := r.Parse(v)
+	if data.Code == http.StatusOK {
+		data.Code = http.StatusInternalServerError
+	}
+	if data.Msg == "ok" {
+		if msg, ok := data.Data.(string); ok {
+			data.Msg = msg
+			data.Data = gin.H{}
+		} else {
+			data.Msg = "unknow error"
+		}
+	}
+	if data.Status == CodeSuccess {
+		data.Status = CodeUnknowError
+	}
+	r.Response(data)
 }
 
 // Forbidden 回应禁止访问
