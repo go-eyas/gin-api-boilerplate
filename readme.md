@@ -10,6 +10,7 @@
 * github.com/jinzhu/configor 配置工具，支持 TOML、json、yaml、shell 环境变量读取配置值
 * github.com/gin-gonic/gin Gin http web 框架
 * github.com/uber-go/zap 性能极高的日志处理库
+* github.com/go-redis/redis redis 封装库
 
 ## 已集成功能特性
 
@@ -23,7 +24,7 @@
   + 错误码
   + http 回应封装
     ```
-    Resp(ctx).OK(gin.H{"hello": "world"})
+    Util.R(ctx).OK(gin.H{"hello": "world"})
 
     // 将会输出
     {
@@ -41,28 +42,33 @@
 * gin.Recovery 错误处理，即使应用异常后不会导致程序退出
 * ErrorMiddleware 错误处理，产生错误后，把错误信息回应到http请求，支持设置错误信息，错误码，数据
 * cors 跨域，基于 github.com/gin-contrib/cors ，已配置好，只需要改配置文件就好
+* logger 记录请求日志
+* assert 静态资源
+* assertNoRoute 适配前端 History API 路由
+
+#### 配置文件
+
+会按照以下顺序加载配置文件，如果全都找不到会尝试使用默认配置项启动，如果存在多个，全都都不加载，后面的会覆盖前面的值
+
+```
+config.toml
+config.local.toml
+config.json
+config.local.json
+config.yml
+config.local.yml
+```
+
+其中local 和使用 `export CONFIG_ENV=dev` 环境变量改变
+
 
 ## 使用
 
+使用前请确认 golang 版本大于 1.12
+
 1. git clone --depth=1 https://github.com/go-eyas/gin-api-boilerplate
-2. 运行脚本 `./build.sh dev`, 将会直接下载依赖并运行
-    + 如果您的IDE是vscode，请按F5直接运行
-    + 如果需要命令行运行，请先将目录切换到 `build/`，然后 `go run ../main.go`，不然配置文件用不了
-
-#### `./build.sh` 脚本使用
-
-```sh
-$ ./build.sh
-
-USAGE:
-  ./run.sh <command>
-
-COMMANDS:
-  docker [version]            构建项目成 docker 镜像
-  build                       构建适用于当前操作系统的可执行文件
-  dev                         启动开发环境，自动重启，自动生成文档
-  help                        打印帮助信息
-```
+2. export GOPROXY=http://goproxy.io # 配合 goproxy 食用更佳
+3. go run main.go
 
 
 ## 命令行工具使用
@@ -88,7 +94,6 @@ Usage:
 Available Commands:
   api         Start HTTP API Server
   help        Help about any command
-  migrate     migrate database
   version     Print the version number of API
 
 Flags:
