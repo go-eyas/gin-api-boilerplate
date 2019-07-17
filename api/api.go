@@ -2,7 +2,7 @@ package api
 
 import (
 	"api/config"
-	"api/log"
+	"toolkit/log"
 
 	"api/api/middleware"
 
@@ -24,6 +24,6 @@ func APIRun(conf *config.Config) error {
 	routes(api)
 
 	serverAddr := serveConf.Addr
-	log.Logger.Infof("API Server Listening: %s", serverAddr)
+	log.Infof("API Server Listening: %s", serverAddr)
 	return api.Run(serverAddr)
 }

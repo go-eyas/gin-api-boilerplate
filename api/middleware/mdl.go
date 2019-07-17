@@ -2,9 +2,10 @@ package middleware
 
 import (
 	"api/config"
-	"api/log"
-	"github.com/gin-gonic/gin"
 	"time"
+	"toolkit/log"
+
+	"github.com/gin-gonic/gin"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gobuffalo/packr"
@@ -16,11 +17,10 @@ func Common(r *gin.Engine, conf *config.Config) {
 	box := packr.NewBox("../../public")
 	r.Use(Assets("/", &box))
 
-	
-	r.Use(Ginzap(log.RequestLogger, time.RFC3339, false))
-	r.Use(RecoveryWithZap(log.RequestLogger, false))
+	r.Use(Ginzap(log.Logger, time.RFC3339, false))
+	r.Use(RecoveryWithZap(log.Logger, false))
 	// r.Use(gin.Recovery())
-	r.Use(ErrorMiddleware(log.Logger))
+	r.Use(ErrorMiddleware(log.SugaredLogger))
 
 	// Cors
 	corsConf := conf.Cors

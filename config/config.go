@@ -1,10 +1,8 @@
 package config
 
 import (
-	"fmt"
-	"os"
-
-	"github.com/jinzhu/configor"
+	"time"
+	"toolkit/config"
 )
 
 // Config 配置
@@ -37,9 +35,13 @@ type Config struct {
 
 	// 日志配置
 	Log struct {
-		Level   string `default:"info"`
-		Path    string `default:"logs/app.log"`
-		Console bool   `default:"true"`
+		Path         string `default:"logs/"`
+		Console      bool   `default:"true"`
+		MaxDay       int    `default:"15"`
+		FileHour     int    `default:"1"`
+		Caller       bool   `default:"false"`
+		MaxAge       time.Duration
+		RotationTime time.Duration
 	}
 
 	// redis 配置
@@ -55,59 +57,10 @@ type Config struct {
 // Conf 配置项实例
 var Conf = &Config{}
 
-var configFileName = "config"
-
-// 自动搜索配置文件 config.xxx 并自动加载，如果配置文件不存在，使用默认配置
-// 支持三种配置文件格式
-// 并支持 环境变量覆盖配置文件
 func init() {
-	exts := []string{"toml", "json", "yml"}
-	env := os.Getenv("CONFIG_ENV")
-	if env == "" {
-		env = "local"
-	}
+	config.Init("config", Conf)
 
-	filelist := []string{}
-
-	for _, ext := range exts {
-		filelist = append(filelist,
-			configFileName+"."+ext,
-			configFileName+"."+env+"."+ext,
-			"../"+configFileName+"."+ext,
-			"../"+configFileName+"."+env+"."+ext,
-		)
-	}
-
-	hasFile := false
-
-	for _, f := range filelist {
-		if _, err := os.Stat(f); !os.IsNotExist(err) {
-			hasFile = true
-			load(f)
-		}
-	}
-
-	if !hasFile {
-		print("没有找到配置文件: config.toml, config.json, config.yml, 使用默认配置启动")
-	}
-
-	// runtime 目录问题
 	Conf.Log.Path = Conf.Runtime + "/" + Conf.Log.Path
-	if Conf.DB.Driver == "sqlite3" {
-		Conf.DB.URI = Conf.Runtime + "/" + Conf.DB.URI
-	}
-
-	if Conf.Server.BaseURL == "" {
-		Conf.Server.BaseURL = Conf.Server.Addr
-	}
-}
-
-// Load 加载解析配置文件
-func load(file string) *Config {
-	err := configor.Load(Conf, file)
-
-	if err != nil {
-		fmt.Printf("skip config file: %s, beacuse error: %v", file, err)
-	}
-	return Conf
+	Conf.Log.MaxAge = time.Hour * 24 * time.Duration(Conf.Log.MaxDay)
+	Conf.Log.RotationTime = time.Hour * time.Duration(Conf.Log.FileHour)
 }

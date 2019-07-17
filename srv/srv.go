@@ -17,7 +17,8 @@ var clients []SrvClient
 func Init(conf *config.Config) {
 	// init redis
 	clients = []SrvClient{
-		db.DataBase,
+		db.Gorm,
+		db.Xorm,
 		redisClient,
 	}
 	for _, cl := range clients {

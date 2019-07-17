@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"api/config"
-	"api/log"
 	"api/srv"
 	"fmt"
 	"os"
+	"toolkit/log"
 
 	"github.com/spf13/cobra"
 )
@@ -48,7 +48,15 @@ func init() {
 	os.MkdirAll(conf.Runtime, os.ModePerm)
 
 	// 初始化日志
-	log.Init(conf)
+	log.Init(&log.LogConfig{
+		Path:         conf.Log.Path,
+		Name:         AppName,
+		Console:      conf.Log.Console,
+		DebugConsole: conf.Log.Console,
+		MaxAge:       conf.Log.MaxAge,
+		RotationTime: conf.Log.RotationTime,
+		Caller:       conf.Log.Caller,
+	})
 
 	// 初始化客户端
 	srv.Init(conf)
