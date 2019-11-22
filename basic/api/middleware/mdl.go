@@ -1,22 +1,17 @@
 package middleware
 
 import (
-	"api/config"
+	"basic/config"
+	"github.com/go-eyas/toolkit/log"
 	"time"
-	"toolkit/log"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/gin-contrib/cors"
-	"github.com/gobuffalo/packr"
 )
 
 // Common 全局通用的中间件
 func Common(r *gin.Engine, conf *config.Config) {
-	// static
-	box := packr.NewBox("../../public")
-	r.Use(Assets("/", &box))
-
 	r.Use(Ginzap(log.Logger, time.RFC3339, false))
 	r.Use(RecoveryWithZap(log.Logger, false))
 	// r.Use(gin.Recovery())
@@ -39,5 +34,4 @@ func Common(r *gin.Engine, conf *config.Config) {
 		},
 		MaxAge: 12 * time.Hour,
 	}))
-
 }

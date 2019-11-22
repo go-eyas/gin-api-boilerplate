@@ -1,8 +1,8 @@
 package srv
 
 import (
-	"api/config"
-	"api/srv/db"
+	"basic/config"
+	"basic/srv/db"
 )
 
 // SrvClient 服务接口

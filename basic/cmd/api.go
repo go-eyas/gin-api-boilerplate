@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"api/api"
-	"api/config"
+	"basic/api"
+	"basic/config"
 	"strings"
-	"toolkit/log"
+	"github.com/go-eyas/toolkit/log"
 
 	"github.com/spf13/cobra"
 )
@@ -12,7 +12,7 @@ import (
 var apiCmd = &cobra.Command{
 	Use:     "api",
 	Aliases: []string{"server", "serve"},
-	Short:   "Start HTTP API Server",
+	Short:   "启动 http 服务器",
 	Run: func(cmd *cobra.Command, args []string) {
 		var addr string
 		switch len(args) {
@@ -24,10 +24,10 @@ var apiCmd = &cobra.Command{
 				addr = "0.0.0.0:" + addr
 			}
 		}
-		if addr != conf.Server.Addr {
-			conf.Server.Addr = addr
+		if addr != config.Conf.Server.Addr {
+			config.Conf.Server.Addr = addr
 		}
-		apiCMD(conf)
+		apiCMD(config.Conf)
 	},
 }
 

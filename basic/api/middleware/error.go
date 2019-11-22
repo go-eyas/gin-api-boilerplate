@@ -1,7 +1,8 @@
 package middleware
 
 import (
-	"api/util"
+	"basic/util"
+	"runtime/debug"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,10 +20,23 @@ type errLogger interface {
 func ErrorMiddleware(logger errLogger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		defer func() {
-			if err := recover(); err != nil {
-				logger.Errorf("%v", err)
+			if data := recover(); data != nil {
+				logger.Errorf("%v", data)
+				debug.PrintStack()
 				ctx.Abort()
-				util.R(ctx).Error(err)
+				// res, err := util.RespError(data)
+				r := util.R(ctx)
+				r.Error(data)
+				// if err != nil {
+				// 	r.Error(util.RData{
+				// 		Code: 500,
+				// 		Msg: "unknow error",
+				// 		Data: data,
+				// 		Status: util.CodeUnknowError,
+				// 	})
+				// 	return
+				// }
+				// r.Error(res)
 			}
 		}()
 		ctx.Next()

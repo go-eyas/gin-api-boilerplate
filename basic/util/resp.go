@@ -1,7 +1,7 @@
 package util
 
 import (
-	"toolkit/gin/util"
+	"github.com/go-eyas/toolkit/gin/util"
 )
 
 var R = util.R

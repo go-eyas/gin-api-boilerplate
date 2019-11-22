@@ -1,13 +1,15 @@
 package api
 
 import (
-	"api/config"
-	"toolkit/log"
+	"basic/config"
+	"basic/log"
 
-	"api/api/middleware"
+	"basic/api/middleware"
 
 	"github.com/gin-gonic/gin"
 )
+
+var Routes = func(engine *gin.Engine) {}
 
 // APIRun 启动 http api 服务
 func APIRun(conf *config.Config) error {
@@ -21,7 +23,7 @@ func APIRun(conf *config.Config) error {
 	// 通用中间件
 	middleware.Common(api, conf)
 
-	routes(api)
+	Routes(api)
 
 	serverAddr := serveConf.Addr
 	log.Infof("API Server Listening: %s", serverAddr)

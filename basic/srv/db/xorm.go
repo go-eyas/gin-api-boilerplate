@@ -1,9 +1,9 @@
 package db
 
 import (
-	"api/config"
-	"toolkit/db"
-	"toolkit/log"
+	"basic/config"
+	"github.com/go-eyas/toolkit/db"
+	"basic/log"
 
 	"github.com/go-xorm/xorm"
 	// _ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite3 需要cgo编译环境，如果真的需要sqlite3再取消这行注释
@@ -33,7 +33,7 @@ func (d *XormClient) Init(conf *config.Config) {
 			Driver: dbConf.Driver,
 			URI:    dbConf.URI,
 			Debug:  conf.Debug,
-			Logger: log.SugaredLogger,
+			Logger: log.Logger,
 		})
 		if err != nil {
 			log.Fatalf("initial database error: %v", err)

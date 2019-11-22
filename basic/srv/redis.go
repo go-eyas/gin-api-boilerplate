@@ -1,9 +1,9 @@
 package srv
 
 import (
-	"api/config"
-	"toolkit/log"
-	"toolkit/redis"
+	"basic/config"
+	"basic/log"
+	"github.com/go-eyas/toolkit/redis"
 )
 
 type RedisClient struct{}

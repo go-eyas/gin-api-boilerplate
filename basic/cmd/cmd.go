@@ -1,11 +1,10 @@
 package cmd
 
 import (
-	"api/config"
-	"api/srv"
+	"basic/config"
+	"basic/srv"
 	"fmt"
 	"os"
-	"toolkit/log"
 
 	"github.com/spf13/cobra"
 )
@@ -13,7 +12,8 @@ import (
 var AppName = "API"
 var AppVersion = "1.0.0"
 var Tag = ""
-var conf *config.Config
+var githash = ""
+
 
 var rootCmd = &cobra.Command{
 	Use:   AppName,
@@ -27,7 +27,7 @@ var rootCmd = &cobra.Command{
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Do Stuff Here
-		apiCMD(conf)
+		apiCMD(config.Conf)
 	},
 }
 
@@ -36,31 +36,11 @@ var versionCmd = &cobra.Command{
 	Short: "Print the version number of " + AppName,
 	Long:  `All software has versions. This is ` + AppName + `'s`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(AppName + " v" + AppVersion + Tag)
+		fmt.Println(AppName + " v" + AppVersion + " " + githash)
 	},
 }
 
 func init() {
-	// 初始化配置项
-	conf = config.Conf
-
-	// 创建运行目录
-	os.MkdirAll(conf.Runtime, os.ModePerm)
-
-	// 初始化日志
-	log.Init(&log.LogConfig{
-		Path:         conf.Log.Path,
-		Name:         AppName,
-		Console:      conf.Log.Console,
-		DebugConsole: conf.Log.Console,
-		MaxAge:       conf.Log.MaxAge,
-		RotationTime: conf.Log.RotationTime,
-		Caller:       conf.Log.Caller,
-	})
-
-	// 初始化客户端
-	srv.Init(conf)
-
 	// 添加命令行工具
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(apiCmd)

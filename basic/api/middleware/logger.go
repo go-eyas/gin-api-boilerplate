@@ -41,7 +41,7 @@ func Ginzap(logger *zap.Logger, timeFormat string, utc bool) gin.HandlerFunc {
 				logger.Error(e)
 			}
 		} else {
-			logger.Info(path,
+			logger.Debug(path,
 				zap.Int("status", c.Writer.Status()),
 				zap.String("method", c.Request.Method),
 				zap.String("path", path),
@@ -97,7 +97,7 @@ func RecoveryWithZap(logger *zap.Logger, stack bool) gin.HandlerFunc {
 				} else {
 					logger.Error("[Recovery from panic]",
 						zap.Time("time", time.Now()),
-						zap.String("error", err.(string)),
+						zap.Any("error", err),
 						zap.String("request", string(httpRequest)),
 					)
 				}

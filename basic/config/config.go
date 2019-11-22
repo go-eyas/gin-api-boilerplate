@@ -1,8 +1,9 @@
 package config
 
 import (
+	"basic/log"
 	"time"
-	"toolkit/config"
+	"github.com/go-eyas/toolkit/config"
 )
 
 // Config 配置
@@ -34,15 +35,7 @@ type Config struct {
 	}
 
 	// 日志配置
-	Log struct {
-		Path         string `default:"logs/"`
-		Console      bool   `default:"true"`
-		MaxDay       int    `default:"15"`
-		FileHour     int    `default:"1"`
-		Caller       bool   `default:"false"`
-		MaxAge       time.Duration
-		RotationTime time.Duration
-	}
+	Log log.Config
 
 	// redis 配置
 	Redis struct {
@@ -58,9 +51,9 @@ type Config struct {
 var Conf = &Config{}
 
 func init() {
-	config.Init("config", Conf)
+	config.Init("api", Conf)
 
 	Conf.Log.Path = Conf.Runtime + "/" + Conf.Log.Path
-	Conf.Log.MaxAge = time.Hour * 24 * time.Duration(Conf.Log.MaxDay)
-	Conf.Log.RotationTime = time.Hour * time.Duration(Conf.Log.FileHour)
+	Conf.Log.MaxAge = time.Hour * 24 * time.Duration(Conf.Log.MaxAge)
+	Conf.Log.RotationTime = time.Hour * time.Duration(Conf.Log.RotationTime)
 }
