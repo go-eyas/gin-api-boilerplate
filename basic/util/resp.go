@@ -5,4 +5,5 @@ import (
 )
 
 var R = util.R
-type RData util.RData
+
+type RData = util.RData

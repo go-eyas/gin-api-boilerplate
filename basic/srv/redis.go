@@ -15,7 +15,7 @@ func (RedisClient) Init(conf *config.Config) {
 	redisConf := conf.Redis
 
 	if len(redisConf.Addrs) == 0 {
-		log.Infof("redis config is empty, skip init redis")
+		// log.Infof("redis config is empty, skip init redis")
 		return
 	}
 	err := redis.Init(&redis.Config{
@@ -32,5 +32,7 @@ func (RedisClient) Init(conf *config.Config) {
 
 // Close 关闭redis连接
 func (r *RedisClient) Close() {
-	redis.Client.Close()
+	if redis.Client != nil {
+		redis.Client.Close()
+	}
 }

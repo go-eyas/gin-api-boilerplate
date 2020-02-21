@@ -6,9 +6,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+
 type errLogger interface {
 	Errorf(string, ...interface{})
 }
+
 // var codeUnknowError = 999999
 
 // ErrorMiddleware 捕获到在http处理时的错误
@@ -24,19 +26,8 @@ func ErrorMiddleware(logger errLogger) gin.HandlerFunc {
 				logger.Errorf("%v", data)
 				debug.PrintStack()
 				ctx.Abort()
-				// res, err := util.RespError(data)
 				r := util.R(ctx)
 				r.Error(data)
-				// if err != nil {
-				// 	r.Error(util.RData{
-				// 		Code: 500,
-				// 		Msg: "unknow error",
-				// 		Data: data,
-				// 		Status: util.CodeUnknowError,
-				// 	})
-				// 	return
-				// }
-				// r.Error(res)
 			}
 		}()
 		ctx.Next()
