@@ -1,6 +1,9 @@
 package middleware
 
 import (
+	"bytes"
+	"io"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -11,6 +14,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 // Ginzap returns a gin.HandlerFunc (middleware) that logs requests using uber-go/zap.
@@ -21,19 +25,23 @@ import (
 // It receives:
 //   1. A time package format string (e.g. time.RFC3339).
 //   2. A boolean stating whether to use UTC time zone or local.
-func Ginzap(logger *zap.Logger, timeFormat string, utc bool) gin.HandlerFunc {
+func Ginzap(logger *zap.Logger, printBody bool) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		// some evil middlewares modify this values
-		path := c.Request.URL.Path
-		query := c.Request.URL.RawQuery
+		path := c.Request.RequestURI
+		contentType := c.GetHeader("content-type")
+		body := ""
+		if printBody && c.Request.Method != "GET" && !strings.Contains(contentType, "form-data") {
+			bodyByte, _ := ioutil.ReadAll(c.Request.Body)
+			c.Request.Body = ioutil.NopCloser(io.Reader(bytes.NewReader(bodyByte)))
+			body = string(bodyByte)
+		}
+
 		c.Next()
 
 		end := time.Now()
 		latency := end.Sub(start)
-		if utc {
-			end = end.UTC()
-		}
 
 		if len(c.Errors) > 0 {
 			// Append error field if this is an erroneous request.
@@ -41,16 +49,25 @@ func Ginzap(logger *zap.Logger, timeFormat string, utc bool) gin.HandlerFunc {
 				logger.Error(e)
 			}
 		} else {
-			logger.Debug(path,
+			args := []zapcore.Field{
 				zap.Int("status", c.Writer.Status()),
 				zap.String("method", c.Request.Method),
-				zap.String("path", path),
-				zap.String("query", query),
+				zap.String("host", c.Request.Host),
 				zap.String("ip", c.ClientIP()),
 				zap.String("user-agent", c.Request.UserAgent()),
-				zap.String("time", end.Format(timeFormat)),
 				zap.String("latency", latency.String()),
-			)
+			}
+			origin := c.Request.Header.Get("Origin")
+			if origin != "" {
+				args = append(args, zap.String("origin", origin))
+			}
+			if contentType != "" {
+				args = append(args, zap.String("content-type", contentType))
+			}
+			if printBody && c.Request.Method != "GET" && body != "" {
+				args = append(args, zap.String("body", body))
+			}
+			logger.Debug(path, args...)
 		}
 	}
 }

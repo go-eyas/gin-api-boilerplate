@@ -18,7 +18,7 @@ func APIRun(conf *config.Config) error {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	api := gin.Default()
+	api := gin.New()
 
 	// 通用中间件
 	middleware.Common(api, conf)

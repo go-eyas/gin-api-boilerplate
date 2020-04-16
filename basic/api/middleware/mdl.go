@@ -2,8 +2,9 @@ package middleware
 
 import (
 	"basic/config"
-	"github.com/go-eyas/toolkit/log"
 	"time"
+
+	"github.com/go-eyas/toolkit/log"
 
 	"github.com/gin-gonic/gin"
 
@@ -12,9 +13,8 @@ import (
 
 // Common 全局通用的中间件
 func Common(r *gin.Engine, conf *config.Config) {
-	r.Use(Ginzap(log.Logger, time.RFC3339, false))
+	r.Use(Ginzap(log.Logger, true))
 	r.Use(RecoveryWithZap(log.Logger, false))
-	// r.Use(gin.Recovery())
 	r.Use(ErrorMiddleware(log.SugaredLogger))
 
 	// Cors
