@@ -13,8 +13,11 @@ import (
 
 // Common 全局通用的中间件
 func Common(r *gin.Engine, conf *config.Config) {
+	// 请求日志
 	r.Use(Ginzap(log.Logger, true))
+	// 错误恢复
 	r.Use(RecoveryWithZap(log.Logger, false))
+	// 错误处理
 	r.Use(ErrorMiddleware(log.SugaredLogger))
 
 	// Cors
