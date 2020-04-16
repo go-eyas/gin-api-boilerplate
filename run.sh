@@ -9,7 +9,7 @@ cd $SCRIPTPATH
 
 export GOPROXY=https://goproxy.cn
 
-APPNAME="gin_api_boilerplate"
+APPNAME="server"
 APPPORT="9000"
 
 red_text() {
