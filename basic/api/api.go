@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var Routes = func(engine *gin.Engine) {}
+var Routes = func(conf *config.Config, engine *gin.Engine) {}
 
 // APIRun 启动 http api 服务
 func APIRun(conf *config.Config) error {
@@ -23,7 +23,7 @@ func APIRun(conf *config.Config) error {
 	// 通用中间件
 	middleware.Common(api, conf)
 
-	Routes(api)
+	Routes(conf, api)
 
 	serverAddr := serveConf.Addr
 	log.Infof("API Server Listening: %s", serverAddr)

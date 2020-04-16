@@ -1,0 +1,16 @@
+{
+  "name": "接口文档",
+  "version": "0.1.0",
+  "description": "服务器api接口文档",
+  "title": "API接口文档",
+  "header": {
+    "title": "介绍",
+    "filename": "./header.md"
+  },
+  "template": {
+    "forceLanguage": "zh_cn",
+    "withCompare": false,
+    "withGenerator": false,
+    "aloneDisplay": false
+  }
+}

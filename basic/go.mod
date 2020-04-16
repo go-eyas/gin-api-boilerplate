@@ -3,6 +3,7 @@ module basic
 go 1.13
 
 require (
+	github.com/BurntSushi/toml v0.3.1
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.4.0
