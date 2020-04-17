@@ -115,3 +115,20 @@ $ go run main.go api
 2019-03-27T18:10:32.955+0800    info    route/api.go:48 API Server Listening:
 [GIN-debug] Listening and serving HTTP on
 ```
+
+## 构建命令
+
+`run.sh` 是集成了构建过程
+
+```
+$ ./run.sh 
+
+USAGE:
+  ./run.sh <command>
+
+COMMANDS:
+  build                     编译项目
+  docker                    使用 docker 运行项目
+  docs                      根据 apidoc 注释生成文档
+  help                      打印帮助信息
+```

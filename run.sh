@@ -35,7 +35,7 @@ check_cmd_or_exit() {
 }
 
 build_docker() {
-  git pull origin master
+  # git pull origin master
   set +e
   docker rm -f $APPNAME
   docker rmi $APPNAME:latest
