@@ -14,7 +14,7 @@ import (
 	"runtime"
 )
 
-var appName = "server"
+var appName = "api"
 var description = appName + ` is a Golang Gin out of box api example:
 * logs: base on zap
 * command line interface tool
@@ -28,8 +28,7 @@ var buildTime = "unknow"
 var goVersion = runtime.Version() + " " + runtime.GOOS + "/" + runtime.GOARCH
 
 func main() {
-	// 初始化配置项
-	conf := config.Conf
+	conf := config.Init(appName)
 
 	// 创建运行目录
 	err := os.MkdirAll(conf.Runtime, os.ModePerm)

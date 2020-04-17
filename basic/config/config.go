@@ -73,11 +73,12 @@ maxAge = 24 # 单位: 小时
 // Conf 配置项实例
 var Conf = &Config{}
 
-func init() {
+func Init(name string) *Config {
 	toml.Decode(defaultConfigContent, Conf)
-	config.Init("api", Conf)
+	config.Init(name, Conf)
 
 	Conf.Log.Path = Conf.Runtime + "/" + Conf.Log.Path
 	Conf.Log.MaxAge = time.Hour * 24 * time.Duration(Conf.Log.MaxAge)
 	Conf.Log.RotationTime = time.Hour * time.Duration(Conf.Log.RotationTime)
+	return Conf
 }
