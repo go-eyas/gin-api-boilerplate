@@ -2,15 +2,17 @@ package db
 
 import (
 	"basic/config"
-	"github.com/go-eyas/toolkit/db"
 	"basic/log"
+
+	"github.com/go-eyas/toolkit/db"
 
 	"github.com/go-xorm/xorm"
 	// _ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite3 需要cgo编译环境，如果真的需要sqlite3再取消这行注释
 )
 
 type XormClient struct {
-	DB *xorm.Engine
+	DB              *xorm.Engine
+	existTableCache map[string]bool
 }
 
 // Xorm 用户初始化和清理数据库
@@ -39,7 +41,39 @@ func (d *XormClient) Init(conf *config.Config) {
 			log.Fatalf("initial database error: %v", err)
 			panic(err)
 		}
+		d.DB = XDB
+		d.existTableCache = make(map[string]bool)
 	}
+}
+
+type MigrateModelX interface {
+	TableName() string
+}
+
+// Migrate 自动建表，表存在时不做任何操作，所以不能自动更新表字段
+func (d *XormClient) Migrate(models ...MigrateModelX) {
+	for _, m := range models {
+		if exist, err := d.DB.IsTableExist((m).TableName()); !exist && err == nil {
+			d.DB.Sync2(m)
+		}
+	}
+}
+
+// CheckTable 检查是否存在表，如果不存在则自动新建
+func (d *XormClient) CheckTable(name string, model interface{}) *xorm.Session {
+	if !d.existTableCache[name] {
+		if exist, err := d.DB.IsTableExist(name); !exist && err == nil {
+			d.DB.Sync2(model)
+		}
+		d.existTableCache[name] = true
+	}
+	return d.DB.Table(name)
+}
+
+// SplitDB 自动分表，根据 TableName 返回值获取表名
+func (d *XormClient) SplitDB(model MigrateModelX) *xorm.Session {
+	tbName := model.TableName()
+	return d.CheckTable(tbName, model)
 }
 
 // Close 关闭数据库连接

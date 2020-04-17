@@ -4,6 +4,7 @@ import (
 	"basic/api"
 	"basic/config"
 	"strings"
+
 	"github.com/go-eyas/toolkit/log"
 
 	"github.com/spf13/cobra"
@@ -34,6 +35,9 @@ var apiCmd = &cobra.Command{
 // API start http server
 func apiCMD(conf *config.Config) {
 	log.Debugf("配置: %+v", conf)
+	// 初始化数据模型
+	ModelInit(conf)
+	// 启动服务
 	if err := api.APIRun(conf); err != nil {
 		log.Fatalf("run api error: %v", err)
 		panic(err)

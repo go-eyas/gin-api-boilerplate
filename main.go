@@ -1,6 +1,7 @@
 package main
 
 import (
+	"api/model"
 	"api/route"
 	"api/service"
 	"basic/api"
@@ -8,7 +9,6 @@ import (
 	"basic/config"
 	"basic/log"
 	"basic/srv"
-	"basic/srv/db"
 	"fmt"
 	"os"
 	"runtime"
@@ -38,17 +38,19 @@ func main() {
 	srv.Init(conf)
 
 	// 初始化服务
-	if db.GDB != nil {
-		service.Init(conf)
-	}
+	service.Init(conf)
 
 	// api 初始化
 	api.Routes = route.Routes
 
+	// 数据模型
+	cmd.ModelInit = model.Init
+
+	// 运行命令
 	cmd.Execute(&cmd.App{
 		Name:  "server",
 		Short: "server is a Golang Gin api example",
-		Description: ` is a Golang Gin out of box api example:
+		Description: `server is a Golang Gin out of box api example:
 * logs: base on zap
 * command line interface tool
 * database: base on gorm

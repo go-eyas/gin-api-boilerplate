@@ -19,30 +19,34 @@ type App struct {
 	GoVersion   string
 }
 
+var RootCmd = &cobra.Command{
+	Use: "server",
+	Run: func(cmd *cobra.Command, args []string) {
+		// Do Stuff Here
+		apiCMD(config.Conf)
+	},
+}
+
 func command(app *App) *cobra.Command {
-	var rootCmd = &cobra.Command{
-		Use:   app.Name,
-		Short: app.Short,
-		Long:  app.Description,
-		Run: func(cmd *cobra.Command, args []string) {
-			// Do Stuff Here
-			apiCMD(config.Conf)
-		},
-	}
+	RootCmd.Use = app.Name
+	RootCmd.Short = app.Short
+	RootCmd.Long = app.Description
 
 	var versionCmd = &cobra.Command{
 		Use:   "version",
-		Short: "Print the version number of " + app.Name,
+		Short: "输出版本号",
 		Long:  `All software has versions. This is ` + app.Name + `'s`,
 		Run: func(cmd *cobra.Command, args []string) {
 			fmt.Println(app.Name + " v" + app.Version + "\nGit Commit:" + app.GitCommit + "\nBuild Time:" + app.BuildTime + "\nGo Version:" + app.GoVersion)
 		},
 	}
-	// 添加命令行工具
-	rootCmd.AddCommand(versionCmd)
-	rootCmd.AddCommand(apiCmd)
 
-	return rootCmd
+	// 添加命令行工具
+	RootCmd.AddCommand(versionCmd)
+	RootCmd.AddCommand(apiCmd)
+	RootCmd.AddCommand(migrateCmd)
+
+	return RootCmd
 }
 
 // Execute 启动命令
