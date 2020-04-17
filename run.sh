@@ -41,6 +41,7 @@ build_docker() {
   docker rmi $APPNAME:latest
   set -e
   docker build -t $APPNAME:latest .
+  touch api.local.toml
   docker run --name $APPNAME -tid \
     -p $APPPORT:$APPPORT \
     -v `pwd`/runtime:/opt/app/runtime \

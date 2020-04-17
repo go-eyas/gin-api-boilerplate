@@ -15,7 +15,7 @@ func Assets(prefix string, box *packr.Box) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if strings.Index(c.Request.URL.Path, prefix) == 0 {
 			p := strings.TrimPrefix(c.Request.RequestURI, prefix)
-			if box.Has(p) {
+			if box.Has(p) || (p == "" && box.Has("index.html")) {
 				fileserver.ServeHTTP(c.Writer, c.Request)
 				c.Abort()
 				return
