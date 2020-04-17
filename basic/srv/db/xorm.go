@@ -52,6 +52,10 @@ type MigrateModelX interface {
 
 // Migrate 自动建表，表存在时不做任何操作，所以不能自动更新表字段
 func (d *XormClient) Migrate(models ...MigrateModelX) {
+	if d.DB == nil {
+		log.Error("database not init")
+		return
+	}
 	for _, m := range models {
 		if exist, err := d.DB.IsTableExist((m).TableName()); !exist && err == nil {
 			d.DB.Sync2(m)

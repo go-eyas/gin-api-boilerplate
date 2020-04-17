@@ -14,6 +14,14 @@ import (
 	"runtime"
 )
 
+var appName = "server"
+var description = appName + ` is a Golang Gin out of box api example:
+* logs: base on zap
+* command line interface tool
+* database: base on gorm
+* database migration
+* config: base on configor
+	`
 var version = "1.0.0"
 var gitCommit = "unknow"
 var buildTime = "unknow"
@@ -31,7 +39,7 @@ func main() {
 	}
 
 	// 初始化日志
-	conf.Log.Name = "server"
+	conf.Log.Name = appName
 	log.Init(&config.Conf.Log)
 
 	// 初始化客户端
@@ -48,18 +56,11 @@ func main() {
 
 	// 运行命令
 	cmd.Execute(&cmd.App{
-		Name:  "server",
-		Short: "server is a Golang Gin api example",
-		Description: `server is a Golang Gin out of box api example:
-* logs: base on zap
-* command line interface tool
-* database: base on gorm
-* database migration
-* config: base on configor
-	`,
-		Version:   version,
-		GitCommit: gitCommit,
-		BuildTime: buildTime,
-		GoVersion: goVersion,
+		Name:        appName,
+		Description: description,
+		Version:     version,
+		GitCommit:   gitCommit,
+		BuildTime:   buildTime,
+		GoVersion:   goVersion,
 	})
 }
