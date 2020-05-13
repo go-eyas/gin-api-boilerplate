@@ -20,7 +20,7 @@ func httpRun(conf *config.Config) {
 	}
 	// 启动服务
 	corsConf := conf.Cors
-	router := api.NewApi(
+	router := api.NewDefault(
 		cors.New(cors.Config{
 			// AllowOrigins:     corsConf.Origin,
 			AllowMethods:     corsConf.Methods,
