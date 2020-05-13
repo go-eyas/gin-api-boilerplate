@@ -16,4 +16,5 @@ require (
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/ugorji/go v1.1.7 // indirect
 	go.uber.org/zap v1.13.0
+	xorm.io/xorm v1.0.1 // indirect
 )

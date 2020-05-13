@@ -1,7 +1,9 @@
 package srv
 
 import (
+	"github.com/go-eyas/toolkit/amqp"
 	"github.com/go-eyas/toolkit/email"
+	"github.com/go-eyas/toolkit/websocket"
 )
 
 type DBConfig struct {
@@ -19,3 +21,7 @@ type RedisConfig struct {
 }
 
 type EmailConfig = email.Config
+
+type AmqpConfig = amqp.Config
+
+type WSConfig = websocket.Config

@@ -83,4 +83,5 @@ func (d *GormClient) Close() {
 	if d.DB != nil {
 		d.DB.Close()
 	}
+
 }
