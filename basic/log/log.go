@@ -1,13 +1,12 @@
 package log
 
 import (
-  "github.com/go-eyas/toolkit/log"
+	"github.com/go-eyas/toolkit/log"
 )
 
-type Config = log.LogConfig
-
-func Init(conf *Config)  {
-  printCaller = conf.Caller
-  log.Init(conf)
-  Logger = log.SugaredLogger
+func Init(conf *log.LogConfig) {
+	printCaller = conf.Caller
+	log.Init(conf)
+	SugaredLogger = log.SugaredLogger
+	Logger = log.Logger
 }

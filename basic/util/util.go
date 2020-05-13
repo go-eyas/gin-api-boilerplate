@@ -10,6 +10,15 @@ func Assert(err error, msg interface{}) {
 	}
 }
 
+func AssertCode(err error, code int) {
+	if err != nil {
+		panic(&RData{
+			Status: code,
+			Msg:    err.Error(),
+		})
+	}
+}
+
 func AssertParam(err error) {
 	if err != nil {
 		panic(&RData{

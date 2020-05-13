@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"os"
+	"regexp"
 	"runtime/debug"
 	"strings"
 	"time"
@@ -25,11 +26,15 @@ import (
 // It receives:
 //   1. A time package format string (e.g. time.RFC3339).
 //   2. A boolean stating whether to use UTC time zone or local.
-func Ginzap(logger *zap.Logger, printBody bool) gin.HandlerFunc {
+func Ginzap(logger *zap.Logger, printBody bool, exclude *regexp.Regexp) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		start := time.Now()
 		// some evil middlewares modify this values
 		path := c.Request.RequestURI
+		if exclude != nil && exclude.MatchString(path) {
+			c.Next()
+			return
+		}
+		start := time.Now()
 		contentType := c.GetHeader("content-type")
 		body := ""
 		if printBody && c.Request.Method != "GET" && !strings.Contains(contentType, "form-data") {

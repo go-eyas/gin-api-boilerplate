@@ -1,31 +1,24 @@
 package api
 
 import (
-	"basic/config"
-	"basic/log"
-
 	"basic/api/middleware"
+	"basic/log"
+	"regexp"
 
 	"github.com/gin-gonic/gin"
 )
 
-var Routes = func(conf *config.Config, engine *gin.Engine) {}
-
-// APIRun 启动 http api 服务
-func APIRun(conf *config.Config) error {
-	serveConf := conf.Server
-	if !conf.Debug {
-		gin.SetMode(gin.ReleaseMode)
-	}
-
+func New(mdls ...gin.HandlerFunc) *gin.Engine {
 	api := gin.New()
+	api.Use(mdls...)
+	return api
+}
 
-	// 通用中间件
-	middleware.Common(api, conf)
-
-	Routes(conf, api)
-
-	serverAddr := serveConf.Addr
-	log.Infof("API Server Listening: %s", serverAddr)
-	return api.Run(serverAddr)
+func NewApi(mdls ...gin.HandlerFunc) *gin.Engine {
+	defMdls := []gin.HandlerFunc{
+		middleware.Ginzap(log.Logger, true, regexp.MustCompile("/*/*.(js|css|png|jpg|woff|tff|oet|html)?")),
+		middleware.RecoveryWithZap(log.Logger, false),
+		middleware.ErrorMiddleware(log.SugaredLogger),
+	}
+	return New(defMdls...)
 }

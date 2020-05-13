@@ -1,12 +1,11 @@
-package db
+package srv
 
 import (
-	"basic/config"
 	"basic/log"
 
 	"github.com/go-eyas/toolkit/db"
 
-	"github.com/go-xorm/xorm"
+	"xorm.io/xorm"
 	// _ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite3 需要cgo编译环境，如果真的需要sqlite3再取消这行注释
 )
 
@@ -25,8 +24,7 @@ var XDB *xorm.Engine
 // var XDB2 *xorm.Engine
 
 // Init 初始化数据库
-func (d *XormClient) Init(conf *config.Config) {
-	dbConf := conf.DB
+func (d *XormClient) Init(dbConf *DBConfig) {
 	var err error
 
 	// 如果有多个数据库，复制这段继续
@@ -34,8 +32,8 @@ func (d *XormClient) Init(conf *config.Config) {
 		XDB, err = db.Xorm(&db.Config{
 			Driver: dbConf.Driver,
 			URI:    dbConf.URI,
-			Debug:  conf.Debug,
-			Logger: log.Logger,
+			Debug:  dbConf.Debug,
+			Logger: log.SugaredLogger,
 		})
 		if err != nil {
 			log.Fatalf("initial database error: %v", err)

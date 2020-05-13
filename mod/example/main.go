@@ -1,9 +1,10 @@
-package service
+package example
 
 import (
   "api/main/config"
+  "basic/api"
 )
 
 func Init(conf *config.Config) {
-  // 业务逻辑初始化
+  api.Register(Route)
 }

@@ -1,7 +1,6 @@
-package db
+package srv
 
 import (
-	"basic/config"
 	"basic/log"
 
 	"github.com/go-eyas/toolkit/db"
@@ -25,8 +24,7 @@ var GDB *gorm.DB
 // var GDB2 *gorm.DB
 
 // Init 初始化数据库
-func (d *GormClient) Init(conf *config.Config) {
-	dbConf := conf.DB
+func (d *GormClient) Init(dbConf *DBConfig) {
 	var err error
 
 	// 如果有多个数据库，复制这段继续
@@ -34,8 +32,8 @@ func (d *GormClient) Init(conf *config.Config) {
 		GDB, err = db.Gorm(&db.Config{
 			Driver: dbConf.Driver,
 			URI:    dbConf.URI,
-			Debug:  conf.Debug,
-			Logger: log.Logger,
+			Debug:  dbConf.Debug,
+			Logger: log.SugaredLogger,
 		})
 		if err != nil {
 			log.Fatalf("initial database error: %v", err)

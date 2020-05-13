@@ -7,8 +7,7 @@ require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.4.0
-	github.com/go-eyas/toolkit v1.1.23
-	github.com/go-xorm/xorm v0.7.4
+	github.com/go-eyas/toolkit v1.2.1
 	github.com/gobuffalo/packr v1.30.1
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.10
